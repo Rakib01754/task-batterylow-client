@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from '../layout/Main/Main';
 import Chart from '../pages/Chart/Chart';
 import FormOne from '../pages/Home/FormOne/FormOne';
+import FormTwo from '../pages/Home/FormTwo/FormTwo';
 import Home from '../pages/Home/Home';
 import Result from '../pages/Result/Result';
 
@@ -21,8 +22,8 @@ const Routes = () => {
                             element: <FormOne></FormOne>
                         },
                         {
-                            path: '/formtow',
-                            element: <FormOne></FormOne>
+                            path: 'formtwo',
+                            element: <FormTwo></FormTwo>
                         },
 
                     ]

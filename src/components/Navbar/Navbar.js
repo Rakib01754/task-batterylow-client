@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <section className="bg-gray-500 text-white">
+        <div>
             <div className="container mx-auto overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-5">
-                    <div className="w-[40%]">
+                <div className="flex flex-col md:flex-row items-center justify-between px-4 py-5">
+                    <div className="w-auto">
                         <div className="flex items-center">
                             <div className="mr-20">
                                 <Link to="/">
@@ -28,7 +28,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     );
 };
 

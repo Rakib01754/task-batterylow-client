@@ -52,7 +52,7 @@ const FormOne = () => {
 
 
             <div>
-                <Link to=''>
+                <Link to='/formtwo'>
                     <span
                         className="inline-block rounded-lg w-32 text-center bg-blue-500 px-6 py-3 text-sm font-medium text-white"
                     >
