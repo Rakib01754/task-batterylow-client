@@ -8,6 +8,14 @@ const Provider = ({ children }) => {
     const [projectDesc, setProjectDesc] = useState('')
     const [clientName, setClientName] = useState('')
     const [contractorName, setContractorName] = useState('')
+    const [maxX, setMaxX] = useState('')
+    const [minX, setMinX] = useState('')
+    const [maxY, setMaxY] = useState('')
+    const [minY, setMinY] = useState('')
+    const [maxZ, setMaxZ] = useState('')
+    const [minZ, setMinZ] = useState('')
+    const maxValues = { maxX, maxY, maxZ }
+    const minValues = { minX, minY, minZ }
 
     const formData = {
         projectName,
@@ -20,7 +28,17 @@ const Provider = ({ children }) => {
 
 
 
-    const data = { formData, setProjectName, setProjectDesc, setClientName, setContractorName }
+    const data = {
+        formData, setProjectName, setProjectDesc, setClientName, setContractorName,
+        setMaxX,
+        setMinX,
+        setMaxY,
+        setMinY,
+        setMaxZ,
+        setMinZ,
+        maxValues,
+        minValues
+    }
     return (
         <DataContext.Provider value={data}>
             {children}

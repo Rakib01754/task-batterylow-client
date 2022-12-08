@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
     return (
         <div>
-            <div className="container mx-auto overflow-hidden">
-                <div className="flex flex-col md:flex-row items-center justify-between px-4 py-5">
-                    <div className="w-auto">
+            <div className="container mx-auto overflow-hidden bg-gray-600 text-white">
+                <div className="flex items-center justify-between px-4 py-5">
+                    <div className="w-[40%]">
                         <div className="flex items-center">
                             <div className="mr-20">
                                 <Link to="/">

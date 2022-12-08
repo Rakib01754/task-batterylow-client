@@ -7,11 +7,31 @@ import { useCSVReader } from 'react-papaparse';
 
 
 const FormTwo = () => {
+    const { setMaxX, setMinX, setMaxY, setMinY, setMaxZ, setMinZ, maxValues, minValues } = useContext(DataContext)
+    const { maxX, maxY, maxZ } = maxValues;
+    const { minX, minY, minZ } = minValues;
     const { CSVReader } = useCSVReader();
     const { formData } = useContext(DataContext)
     const { projectName, projectDesc, clientName, contractorName } = formData;
-    const [csvData, setCsvData] = useState('')
-    console.log(csvData)
+    const [csvData, setCsvData] = useState([])
+    const mainData = csvData.data
+    const slicedData = mainData?.slice(1, 1362)
+    console.log(slicedData)
+
+    // for max Values Of X,Y,Z
+    Math.max.apply(Math, slicedData?.map(v => setMaxX(v[1])));
+    Math.max.apply(Math, slicedData?.map(v => setMaxY(v[2])));
+    Math.max.apply(Math, slicedData?.map(v => setMaxZ(v[3])));
+
+
+    // for min Values Of X,Y,Z
+    Math.min.apply(Math, slicedData?.map(v => setMinX(v[1])));
+    Math.min.apply(Math, slicedData?.map(v => setMinY(v[2])));
+    Math.min.apply(Math, slicedData?.map(v => setMinZ(v[3])));
+
+
+
+
     const styles = {
         csvReader: {
             display: 'flex',
@@ -116,7 +136,7 @@ const FormTwo = () => {
                     </>
                 )}
             </CSVReader>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                     <label htmlFor="max-x" className="font-bold">Max X: </label>
 
@@ -125,6 +145,7 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max X value"
+                            defaultValue={maxX}
                             required
                         />
                     </div>
@@ -137,12 +158,13 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min X value"
+                            defaultValue={minX}
                             required
                         />
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                     <label htmlFor="max-y" className="font-bold">Max Y: </label>
 
@@ -151,6 +173,7 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max Y value"
+                            defaultValue={maxY}
                             required
                         />
                     </div>
@@ -163,12 +186,13 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min Y value"
+                            defaultValue={minY}
                             required
                         />
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                     <label htmlFor="max-z" className="font-bold">Max Z: </label>
 
@@ -177,6 +201,7 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max Z value"
+                            defaultValue={maxZ}
                             required
                         />
                     </div>
@@ -189,6 +214,7 @@ const FormTwo = () => {
                             type="number"
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min Z value"
+                            defaultValue={minZ}
                             required
                         />
                     </div>
