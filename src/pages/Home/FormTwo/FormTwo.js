@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from '../../../context/Provider/Provider';
 import { useCSVReader } from 'react-papaparse';
 
@@ -7,7 +7,8 @@ import { useCSVReader } from 'react-papaparse';
 
 
 const FormTwo = () => {
-    const { setMaxX, setMinX, setMaxY, setMinY, setMaxZ, setMinZ, maxValues, minValues } = useContext(DataContext)
+    const { setMaxX, setMinX, setMaxY, setMinY, setMaxZ, setMinZ, maxValues, minValues, setSubmittedFormData } = useContext(DataContext)
+    const navigate = useNavigate()
     const { maxX, maxY, maxZ } = maxValues;
     const { minX, minY, minZ } = minValues;
     const { CSVReader } = useCSVReader();
@@ -16,7 +17,8 @@ const FormTwo = () => {
     const [csvData, setCsvData] = useState([])
     const mainData = csvData.data
     const slicedData = mainData?.slice(1, 1362)
-    console.log(slicedData)
+
+
 
     // for max Values Of X,Y,Z
     Math.max.apply(Math, slicedData?.map(v => setMaxX(v[1])));
@@ -28,6 +30,26 @@ const FormTwo = () => {
     Math.min.apply(Math, slicedData?.map(v => setMinX(v[1])));
     Math.min.apply(Math, slicedData?.map(v => setMinY(v[2])));
     Math.min.apply(Math, slicedData?.map(v => setMinZ(v[3])));
+
+    // form submit and get data 
+    const handleFormSubmit = (e) => {
+        e.preventDefault()
+        const form = e.target;
+        const maxXValue = form.maxX.value;
+        const maxYValue = form.maxY.value;
+        const maxZValue = form.maxZ.value;
+        const minXValue = form.minX.value;
+        const minYValue = form.minY.value;
+        const minZValue = form.minZ.value;
+        const projecNameValue = form.projectName.value;
+        const projecDescValue = form.projectDesc.value;
+        const clientNameValue = form.client.value;
+        const contractorNameValue = form.contractor.value;
+
+        const formAllData = { maxXValue, maxYValue, maxZValue, minXValue, minYValue, minZValue, projecNameValue, projecDescValue, clientNameValue, contractorNameValue }
+        setSubmittedFormData(formAllData)
+        navigate('/result')
+    }
 
 
 
@@ -58,7 +80,7 @@ const FormTwo = () => {
     };
 
     return (
-        <form action="" className="mx-auto mt-8 mb-0 max-w-md space-y-4">
+        <form onSubmit={handleFormSubmit} className="mx-auto mt-8 mb-0 max-w-md space-y-4">
             {/* from previous input  */}
             <div>
                 <label htmlFor="name" className="font-bold">Project Name: </label>
@@ -66,6 +88,7 @@ const FormTwo = () => {
                 <div className="relative">
                     <input
                         type="text"
+                        name='projectName'
                         className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                         defaultValue={projectName} disabled
                     />
@@ -78,6 +101,7 @@ const FormTwo = () => {
                     <textarea
                         rows="4" cols="50"
                         type="text"
+                        name='projectDesc'
                         className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                         defaultValue={projectDesc} disabled
                     />
@@ -89,6 +113,7 @@ const FormTwo = () => {
                 <div className="relative">
                     <input
                         type="text"
+                        name='client'
                         className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                         defaultValue={clientName} disabled
                     />
@@ -100,6 +125,7 @@ const FormTwo = () => {
                 <div className="relative">
                     <input
                         type="text"
+                        name='contractor'
                         className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                         defaultValue={contractorName} disabled
                     />
@@ -108,7 +134,7 @@ const FormTwo = () => {
             <hr className='border-b-2 border black' />
 
             {/* in this form  */}
-            <h4 className='text-xl'>Please Upload A CSV </h4>
+            <h4 className='text-xl font-bold mt-2'>Please Upload A CSV File Here </h4>
             <CSVReader
                 onUploadAccepted={(results) => {
                     setCsvData(results)
@@ -143,6 +169,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='maxX'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max X value"
                             defaultValue={maxX}
@@ -156,6 +183,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='minX'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min X value"
                             defaultValue={minX}
@@ -171,6 +199,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='maxY'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max Y value"
                             defaultValue={maxY}
@@ -184,6 +213,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='minY'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min Y value"
                             defaultValue={minY}
@@ -199,6 +229,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='maxZ'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Max Z value"
                             defaultValue={maxZ}
@@ -212,6 +243,7 @@ const FormTwo = () => {
                     <div className="relative">
                         <input
                             type="number"
+                            name='minZ'
                             className="w-full rounded-lg border border-black p-4 pr-12 text-sm shadow-sm mt-2"
                             placeholder="Min Z value"
                             defaultValue={minZ}
@@ -227,14 +259,12 @@ const FormTwo = () => {
                     <p className='inline-block rounded-lg w-32 text-center bg-blue-500 px-6 py-3 text-sm font-medium text-white'>Go Back</p>
                 </Link>
                 <div>
-                    <Link>
-                        <button
-                            type='submit'
-                            className="inline-block rounded-lg w-32 text-center bg-blue-500 px-6 py-3 text-sm font-medium text-white"
-                        >
-                            Submit
-                        </button>
-                    </Link>
+                    <button
+                        type='submit'
+                        className="inline-block rounded-lg w-32 text-center bg-blue-500 px-6 py-3 text-sm font-medium text-white"
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </form>
